@@ -50,7 +50,12 @@ Copy the `.env.presets` file to `.env` and edit to your preferences:
 
 What is niceness?
 Niceness really is the niceness of a task. The nicer a task, the less important is makes itself, giving higher priority to other threads. This comes in handy if you run your provider on a computer you actually still want to be usable. In that case I recommend setting this to maximum niceness of 20.
-  
+
+Note: Make sure your machine has enough resources to start your scaled server! That means your server should have at least:
+- NODE_NUM x NODE_CPU_THREADS cores
+- NODE_NUM x NODE_MEM_GIB memory
+- NODE_NUM x NODE_STORAGE_GIB storage
+
 ### 2. Run the Node  
   
 Use `make up` to start the node in a detached mode.  Alternatively use `make upl` to addionally directly display the logs.
