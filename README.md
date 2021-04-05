@@ -1,89 +1,63 @@
-#  Golem Provider Node :whale: Docker Image
+## :information_source: Fork notes
+This repo is a fork from [golem-node](https://github.com/alexandre-abrioux/golem-node), inspired by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
+Why forked?
+- I liked the convience of the Makefile of [golem-node](https://github.com/alexandre-abrioux/golem-node) as well as their healthchecks but I also wanted the scalability introduced by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
+- I like the idea of using preset files instead of a manual `golemsp settings` run from [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider), but I wanted to leverable settings via environment variables
+- I wanted the ability to test pre-release versions
+- aiming to add more features in the future
 
-> Project won one of the four prizes allocated by the Golem Project on Gitcoin's [Hack New Golem](https://gitcoin.co/issue/golemfactory/hackathons/6/100024411) bounty!
->
-> Read more on the [Golem's Blog article](https://blog.golemproject.net/meet-the-winners-golem-gitcoin-hackathon-2020/).
+Caveats?
+- Currently only existing ETH addresses are allowed as the scalability makes managing local volumes (in which local wallets are stored) a bit tricky
+- Also, stats are not persistent
 
-## :link: Links
 
-- [Github Repository](https://github.com/alexandre-abrioux/golem-node)
-- [DockerHub Respository](https://hub.docker.com/r/aabrioux/golem-node)
-- [Golem Network > Website](https://golem.network/)
-- [Golem Network > Provider Node Documentation](https://handbook.golem.network/provider-tutorials/provider-tutorial)
-- [Golem Network > Yagna Github Repository](https://github.com/golemfactory/yagna)
+#  Golem Provider Node :whale: Docker Image  
+  
+I recommend checking out the parent repos mentioned above for more general information.
+  
+## :information_source: Prerequisites (important)  
+  
+You need to have Docker as well as docker-compose installed.
+Tested on Docker version 20.10.5 and docker-compose version 1.28.5.
+Currently only works on Linux machines.
+  
+## :arrow_forward: Usage  
+  
+You can clone this repository or use the provided `docker-compose.yml` as a base template for your own setup.  
+  
+A `Makefile` is included for convenience and I highly recommend using it, as it also takes care if environment variable imports.
+  
+I recommend to use `make` or `make help` to list the available shortcuts.  
+  
+### 1. Environment Set Up  
+  
+Copy the `.env.presets` file to `.env` and edit to your preferences:
 
-## :information_source: Prerequisites (important)
+|Variable| Description |
+|--|--|
+| YA_PAYMENT_NETWORK 	| mainnet or rinkeby|  
+| NODE_SUBNET 			| Which subnet to use|  
+| NODE_NAME				| Name you want to give your node|  
+| YA_ACCOUNT 			| Your Ethereum wallet address you want to be paid to|  
+| NODE_CPU_THREADS 		| Number of cores you want to dedictate per node|  
+| NODE_MEM_GIB 			| Gigabytes of memory you want to allocate per node|  
+| NODE_STORAGE_GIB 		| Gigabytes of storage you want to allocate per node|  
+| NODE_COSTS_START 		| Set job starting cost, default: 0.0|  
+| NODE_COSTS_HOUR 		| Set job running cost per hour, default: 0.02|  
+| NODE_COSTS_CPU_HOUR 	| Set job running cost per CPU hour, default: 0.1|  
+| NODE_NUM 				| Number of nodes/providers to run|  
+| NICENESS 				| Set the providers nice-ness, see notes below, default: 0|
 
-As per the [Provider Node Documentation > Prerequisites](https://handbook.golem.network/provider-tutorials/provider-tutorial#prerequisites):
-
-> To run Golem Sneak Peek you'll need a physical machine as you may encounter issues when running it on a virtual machine.
-
-Your Docker host must be a physical machine: you will need to give the container access to the `/dev/kvm` device.
-
-Furthermore, Golem only supports 64-bit architecture for the moment (see [GolemFactory/Yagna Releases Page](https://github.com/golemfactory/yagna/releases)).
-
-## :arrow_forward: Usage
-
-You can clone this repository or use the provided `docker-compose.yml` as a base template for your own setup.
-
-A `Makefile` is included for convenience but `make` is not required to run the node.
-
-Use `make` or `make help` to list the available shortcuts.
-
-### 1. Environment Set Up
-
-Create a `.env.local` file in order to add your ERC20 address as an environment variable
-(replace the following placeholder with your own **PUBLIC** address):
-```bash
-echo "YA_ACCOUNT=0x18f199E8DAb38257ca84D4858FF6F73De1A697eA" >> .env.local
-```
-This is important because it will be the address where your earned GLM will be sent.
-
-You can use for instance your Metamask or Ledger public address.
-This way, you can have your earned GLM tokens sent directly to your account,
-and you can manage them from there without Golem ever needing to access your wallet.
-
-### 2. First Start
-
-Use `make setup` to run the node for the first time.
-
-The CLI will ask you a few questions: refer to the [Provider Node Documentation > Initial Setup](https://handbook.golem.network/provider-tutorials/provider-tutorial#initial-setup) for more details.
-
-After the node has started, typically when you see logs that are similar to the followings, you can exit the program with `CTRL+C`:
-```
-[INFO  ya_market::matcher] Subscribed new Offer: [...] using identity: golem-cli [...]
-[INFO  ya_provider::market::provider_market] Subscribed offer. Subscription id [...], preset [wasmtime].
-[INFO  ya_payment::service::local] get status: GetStatus { address: "...", driver: "zksync", network: Some("mainnet"), token: None }
-[INFO  ya_payment::service::local] get status: GetStatus { address: "...", driver: "erc20", network: Some("mainnet"), token: None }
-```
-
-The node settings will be kept on your host in a `./data-node` repository.
-
-### 3. Run the Node
-
-Use `make up` to start the node in a detached mode.
-
-Display the last logs at any time by running `make logs`.
-
-Use `make status` to get your node address and health, and `make settings` to display your current node parameters.
-
-Get a shell access to your running container with `make shell`.
-
-## :dash: Maintenance
-
-The node caches every docker image it uses to run jobs in the following directory:
-`./data-node/ya-provider/exe-unit/cache/`.
-Those images are never removed and can slowly take up a lot of space on your hard drive.
-
-To prevent this a helper command has been introduced: `make clean` ;
-which removes every file older than 7 days in the cache directory.
-
-If you are running the job scheduler for docker environments [Ofelia](https://github.com/mcuadros/ofelia) on your host
-this task will be done automatically, every day at midnight,
-thanks to specific labels added on the `node` service.
-
-## Donation :beer:
-
-If you find this template useful you may consider the option of offering me a beer through a donation. Support is very appreciated :slightly_smiling_face:
-
-ETH / ERC20 Token: `0x18f199E8DAb38257ca84D4858FF6F73De1A697eA`
+What is niceness?
+Niceness really is the niceness of a task. The nicer a task, the less important is makes itself, giving higher priority to other threads. This comes in handy if you run your provider on a computer you actually still want to be usable. In that case I recommend setting this to maximum niceness of 20.
+  
+### 2. Run the Node  
+  
+Use `make up` to start the node in a detached mode.  Alternatively use `make upl` to addionally directly display the logs.
+  
+Display the last logs at any time by running `make logs`.  
+  
+Use `make status` to get your node address and health, and `make settings` to display your current node parameters.  Note that this will only display status and settings of your first node, in case you use `NODE_NUM` > 1.
+  
+Get a shell access to your first running container with `make shell`.  Here also this gives you only the shell of your first node. 
+If you want the shell of a different node, use: `docker-compose exec --index=INDEX_NUM node bash` with the `INDEX_NUM` number of your choice.
