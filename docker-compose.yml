@@ -3,20 +3,19 @@ version: '3.5'
 services:
 
   node:
-    command: nice -n20 golemsp run
-    container_name: ${COMPOSE_PROJECT_NAME}_node
-      #image: aabrioux/golem-node:latest
-    build: docker
+    deploy:
+       replicas: ${NODE_NUM}
+    command: nice -n${NICENESS} golemsp run
+    build: .
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./data-node/ya-provider/:/root/.local/share/ya-provider/
-      - ./data-node/yagna/:/root/.local/share/yagna/
+#      - /root/.local/share/ya-provider/
+#      - /root/.local/share/yagna/
     devices:
       - /dev/kvm:/dev/kvm
-    environment:
-      - YA_PAYMENT_NETWORK=${YA_PAYMENT_NETWORK}
-      - YA_ACCOUNT=${YA_ACCOUNT}
+    env_file:
+      - .env
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.golem-clean.schedule: "@daily"
