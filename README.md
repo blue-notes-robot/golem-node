@@ -1,5 +1,6 @@
 ## :information_source: Fork notes
 This repo is a fork from [golem-node](https://github.com/alexandre-abrioux/golem-node), inspired by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
+
 Why forked?
 - I liked the convience of the Makefile of [golem-node](https://github.com/alexandre-abrioux/golem-node) as well as their healthchecks but I also wanted the scalability introduced by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
 - I like the idea of using preset files instead of a manual `golemsp settings` run from [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider), but I wanted to leverable settings via environment variables

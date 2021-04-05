@@ -17,11 +17,11 @@ upd: 			## Start the node in daemon mode
 	docker-compose up -d --build --remove-orphans
 
 .PHONY: upt
-up: 			## Start the node in terminal mode
+upt: 			## Start the node in terminal mode
 	docker-compose up --build --remove-orphans
 
 .PHONY: upl
-up: 			## Start the node in daemon mode and directly follow logs
+upl: 			## Start the node in daemon mode and directly follow logs
 	docker-compose up --build --remove-orphans; docker-compose logs -t --tail=10 -f node
 
 .PHONY: stop
