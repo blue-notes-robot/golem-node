@@ -20,3 +20,23 @@ services:
       ofelia.enabled: "true"
       ofelia.job-exec.golem-clean.schedule: "@daily"
       ofelia.job-exec.golem-clean.command: "find /root/.local/share/ya-provider/exe-unit/cache/ -mtime +7 -type f -exec rm {} +"
+    networks:
+      - node_network
+    healthcheck:
+      test: /root/healthcheck.sh
+      interval: 10m
+      timeout: 10s
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    tty: true
+    container_name: autoheal
+    restart: always
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  node_network:
+    driver: bridge

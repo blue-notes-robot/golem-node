@@ -41,10 +41,7 @@ RUN apt-get update -q \
 COPY --from=installer ${YA_DIR_PLUGINS} ${YA_DIR_PLUGINS}
 COPY --from=installer ${YA_DIR_BIN_TMP} ${YA_DIR_BIN}
 
-CMD ["golemsp", "run"]
-HEALTHCHECK \
-    --interval=10m \
-    --timeout=10s \
-    CMD golemsp status || exit 1
-
 COPY ya-provider/ /root/.local/share/ya-provider/
+COPY healthcheck.sh /root/healthcheck.sh
+
+CMD ["golemsp", "run"]
