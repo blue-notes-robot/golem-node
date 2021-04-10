@@ -2,7 +2,7 @@
 This repo is a fork from [golem-node](https://github.com/alexandre-abrioux/golem-node), inspired by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
 
 Why forked?
-- I liked the convience of the Makefile of [golem-node](https://github.com/alexandre-abrioux/golem-node) as well as their healthchecks but I also wanted the scalability introduced by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
+- I liked the convenience of the Makefile of [golem-node](https://github.com/alexandre-abrioux/golem-node) as well as their healthchecks but I also wanted the scalability introduced by [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider)
 - I like the idea of using preset files instead of a manual `golemsp settings` run from [scaleable-golem-provider](https://github.com/cryptobench/scaleable-golem-provider), but I wanted to leverable settings via environment variables
 - I wanted the ability to test pre-release versions
 - aiming to add more features in the future
@@ -40,7 +40,7 @@ Copy the `.env.presets` file to `.env` and edit to your preferences:
 | NODE_SUBNET 			| Which subnet to use|  
 | NODE_NAME				| Name you want to give your node|  
 | YA_ACCOUNT 			| Your Ethereum wallet address you want to be paid to|  
-| NODE_CPU_THREADS 		| Number of cores you want to dedictate per node|  
+| NODE_CPU_THREADS 		| Number of cores you want to dedicate per node|  
 | NODE_MEM_GIB 			| Gigabytes of memory you want to allocate per node|  
 | NODE_STORAGE_GIB 		| Gigabytes of storage you want to allocate per node|  
 | NODE_COSTS_START 		| Set job starting cost, default: 0.0|  
@@ -52,7 +52,7 @@ Copy the `.env.presets` file to `.env` and edit to your preferences:
 What is niceness?
 Niceness really is the niceness of a task. The nicer a task, the less important is makes itself, giving higher priority to other threads. This comes in handy if you run your provider on a computer you actually still want to be usable. In that case I recommend setting this to maximum niceness of 20.
 
-Note: Make sure your machine has enough resources to start your scaled server! That means your server should have at least:
+:information_source: Note: Make sure your machine has enough resources to start your scaled server! That means your server should have at least:
 - NODE_NUM x NODE_CPU_THREADS cores
 - NODE_NUM x NODE_MEM_GIB memory
 - NODE_NUM x NODE_STORAGE_GIB storage
@@ -60,13 +60,18 @@ Note: Make sure your machine has enough resources to start your scaled server! T
 ### 2. Run the Node  
 
 Run `make presets` on first start and whenever you have changed any of the settings in the .env file. 
-If you don't you will be either running old settings or the build will fail.
-  
-Use `make up` to start the node in a detached mode.  Alternatively use `make upl` to addionally directly display the logs.
-  
+If you don't you will be either running old settings, or the build will fail.
+
+There is three ways you can start your node:
+- `make upd` to start the node in a detached mode. No logs will be shown.
+- `make upl` to additionally directly display the logs. Your node will continue working if you close your terminal.
+- `make upt` to start your node in terminal mode. CTRL+C will stop your node.
+
 Display the last logs at any time by running `make logs`.  
   
 Use `make status` to get your node address and health, and `make settings` to display your current node parameters.  Note that this will only display status and settings of your first node, in case you use `NODE_NUM` > 1.
   
-Get a shell access to your first running container with `make shell`.  Here also this gives you only the shell of your first node. 
+Get shell access to your first running container with `make shell`.  Here also this gives you only the shell of your first node. 
 If you want the shell of a different node, use: `docker-compose exec --index=INDEX_NUM node bash` with the `INDEX_NUM` number of your choice.
+
+To stop your node, run `make stop`.
