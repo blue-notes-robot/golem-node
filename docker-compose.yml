@@ -26,6 +26,7 @@ services:
       test: /root/healthcheck.sh
       interval: 10m
       timeout: 10s
+      start_period: 20s
 
   autoheal:
     image: willfarrell/autoheal:latest
