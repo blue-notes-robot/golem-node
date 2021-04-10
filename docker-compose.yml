@@ -21,7 +21,7 @@ services:
       ofelia.job-exec.golem-clean.schedule: "@daily"
       ofelia.job-exec.golem-clean.command: "find /root/.local/share/ya-provider/exe-unit/cache/ -mtime +7 -type f -exec rm {} +"
     networks:
-      - node_network
+      - golem_net
     healthcheck:
       test: /root/healthcheck.sh
       interval: 5m
@@ -38,5 +38,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
-  node_network:
+  golem_net:
     driver: bridge
