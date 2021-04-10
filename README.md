@@ -58,6 +58,9 @@ Note: Make sure your machine has enough resources to start your scaled server! T
 - NODE_NUM x NODE_STORAGE_GIB storage
 
 ### 2. Run the Node  
+
+Run `make presets` on first start and whenever you have changed any of the settings in the .env file. 
+If you don't you will be either running old settings or the build will fail.
   
 Use `make up` to start the node in a detached mode.  Alternatively use `make upl` to addionally directly display the logs.
   
