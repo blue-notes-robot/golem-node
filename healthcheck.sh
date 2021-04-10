@@ -1,5 +1,5 @@
 #!/bin/bash
-if grep -q ERROR root/.local/share/yagna/yagna_rCURRENT.log
+if grep -q ERROR /root/.local/share/yagna/yagna_rCURRENT.log
     then
         echo ERROR found!; exit 1
     else
