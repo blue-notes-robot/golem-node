@@ -30,7 +30,6 @@ services:
   autoheal:
     image: willfarrell/autoheal:latest
     tty: true
-    container_name: autoheal
     restart: always
     env_file:
       .env
