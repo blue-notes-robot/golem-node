@@ -36,18 +36,21 @@ Copy the `.env.presets` file to `.env` and edit to your preferences:
 
 |Variable| Description |
 |--|--|
-| YA_PAYMENT_NETWORK 	| mainnet or rinkeby|  
-| NODE_SUBNET 			| Which subnet to use|  
-| NODE_NAME				| Name you want to give your node|  
-| YA_ACCOUNT 			| Your Ethereum wallet address you want to be paid to|  
-| NODE_CPU_THREADS 		| Number of cores you want to dedicate per node|  
-| NODE_MEM_GIB 			| Gigabytes of memory you want to allocate per node|  
-| NODE_STORAGE_GIB 		| Gigabytes of storage you want to allocate per node|  
-| NODE_COSTS_START 		| Set job starting cost, default: 0.0|  
-| NODE_COSTS_HOUR 		| Set job running cost per hour, default: 0.02|  
-| NODE_COSTS_CPU_HOUR 	| Set job running cost per CPU hour, default: 0.1|  
-| NODE_NUM 				| Number of nodes/providers to run|  
-| NICENESS 				| Set the providers nice-ness, see notes below, default: 0|
+| YA_PAYMENT_NETWORK 	    | mainnet or rinkeby                                                                       |
+| NODE_SUBNET 			    | Which subnet to use                                                                      |
+| NODE_NAME				    | Name you want to give your node                                                          |
+| YA_ACCOUNT 			    | Your Ethereum wallet address you want to be paid to                                      |
+| NODE_CPU_THREADS 		    | Number of cores you want to dedicate per node                                            |
+| NODE_MEM_GIB 			    | Gigabytes of memory you want to allocate per node                                        |
+| NODE_STORAGE_GIB 		    | Gigabytes of storage you want to allocate per node                                       |
+| NODE_COSTS_START 		    | Set job starting cost, default: 0.0                                                      |
+| NODE_COSTS_HOUR 		    | Set job running cost per hour, default: 0.02                                             |
+| NODE_COSTS_CPU_HOUR 	    | Set job running cost per CPU hour, default: 0.1                                          |
+| NODE_NUM 				    | Number of nodes/providers to run                                                         |
+| NICENESS 				    | Set the providers nice-ness, see notes below, default: 0                                 |
+| AUTOHEAL_CONTAINER_LABEL  | Which containers to autoheal, default: all                                               |
+| AUTOHEAL_START_PERIOD     | Delay for autoheal. Should be same as the healthcheck interval. default: 300             |
+| AUTOHEAL_INTERVAL         | Interval for autoheal. Default: 5                                                        |
 
 What is niceness?
 Niceness really is the niceness of a task. The nicer a task, the less important is makes itself, giving higher priority to other threads. This comes in handy if you run your provider on a computer you actually still want to be usable. In that case I recommend setting this to maximum niceness of 20.
