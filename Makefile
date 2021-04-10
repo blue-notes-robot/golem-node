@@ -4,6 +4,10 @@ SHELL := /bin/bash
 include .env
 export
 
+ifndef index
+override index = 1
+endif
+
 .PHONY: help
 help:		## Display this help message
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
@@ -38,7 +42,7 @@ restart: 		## Restart the node
 
 .PHONY: shell
 shell: 			## Enter the container shell
-	docker-compose exec node bash
+	docker-compose exec --index=$(index) node bash
 
 .PHONY: logs
 logs: 			## Display the container logs
@@ -46,15 +50,15 @@ logs: 			## Display the container logs
 
 .PHONY: status
 status: 		## Get the running node status
-	docker-compose exec node golemsp status
+	docker-compose exec --index=$(index) node golemsp status
 
 .PHONY: settings
 settings: 		## Show the running node settings
-	docker-compose exec node golemsp settings show
+	docker-compose exec --index=$(index) node golemsp settings show
 
 .PHONY: clean
 clean:			## Remove cached files older than 7 days
-	docker-compose exec node find /root/.local/share/ya-provider/exe-unit/cache/ -mtime +7 -type f -exec rm {} +
+	docker-compose exec --index=$(index) node find /root/.local/share/ya-provider/exe-unit/cache/ -mtime +7 -type f -exec rm {} +
 
 .PHONY: presets
 presets: 		## Show the running node settings

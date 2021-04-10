@@ -71,10 +71,19 @@ There is three ways you can start your node:
 - `make upl` to additionally directly display the logs. Your node will continue working if you close your terminal.
 - `make upt` to start your node in terminal mode. CTRL+C will stop your node.
 
-Display the last logs at any time by running `make logs`.  
-  
-Use `make status` to get your node address and health, and `make settings` to display your current node parameters.  Note that this will only display status and settings of your first node, in case you use `NODE_NUM` > 1.
-  
+Display the last logs at any time by running `make logs`.
+
+Use
+- `make shell` to enter the shell of a node.
+- `make status` to get your node address and health.
+- `make settings` to display your current node parameters. 
+- `make clean` to clean the node's cache. 
+
+By default, these commands will give results for the first node. 
+If you are running more than one node you can add index=NUM to your command to address a different index.
+Example: `make status index=2`
+
+
 Get shell access to your first running container with `make shell`.  Here also this gives you only the shell of your first node. 
 If you want the shell of a different node, use: `docker-compose exec --index=INDEX_NUM node bash` with the `INDEX_NUM` number of your choice.
 
