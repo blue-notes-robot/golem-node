@@ -51,6 +51,7 @@ Copy the `.env.presets` file to `.env` and edit to your preferences:
 | AUTOHEAL_CONTAINER_LABEL  | Which containers to autoheal, default: all                                               |
 | AUTOHEAL_START_PERIOD     | Delay for autoheal. Should be same as the healthcheck interval. default: 300             |
 | AUTOHEAL_INTERVAL         | Interval for autoheal. Default: 5                                                        |
+| COMPOSE_PROJECT_NAME      | Changes the default docker-compose prefix for nicer container names, default: golem      |
 
 What is niceness?
 Niceness really is the niceness of a task. The nicer a task, the less important is makes itself, giving higher priority to other threads. This comes in handy if you run your provider on a computer you actually still want to be usable. In that case I recommend setting this to maximum niceness of 20.
