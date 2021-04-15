@@ -1,5 +1,5 @@
 ARG UBUNTU_VERSION=20.04
-ARG YA_CORE_VERSION=pre-rel-v0.6.4-rc5
+ARG YA_CORE_VERSION=v0.6.4
 ARG YA_WASI_VERSION=0.2.2
 ARG YA_VM_VERSION=0.2.5
 ARG YA_DIR_BIN=/usr/bin/
@@ -12,13 +12,13 @@ ARG YA_WASI_VERSION
 ARG YA_VM_VERSION
 ARG YA_DIR_BIN_TMP
 ARG YA_DIR_PLUGINS
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update -q \
 && apt-get install -q -y --no-install-recommends \
     wget \
     ca-certificates \
     xz-utils \
     apt-utils \
-    dialog \
 && mkdir -p ${YA_DIR_BIN_TMP} \
 && mkdir -p ${YA_DIR_PLUGINS} \
 && wget -q "https://github.com/golemfactory/yagna/releases/download/${YA_CORE_VERSION}/golem-provider-linux-${YA_CORE_VERSION}.tar.gz" \
