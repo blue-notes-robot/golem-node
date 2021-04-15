@@ -17,6 +17,8 @@ RUN apt-get update -q \
     wget \
     ca-certificates \
     xz-utils \
+    apt-utils \
+    dialog \
 && mkdir -p ${YA_DIR_BIN_TMP} \
 && mkdir -p ${YA_DIR_PLUGINS} \
 && wget -q "https://github.com/golemfactory/yagna/releases/download/${YA_CORE_VERSION}/golem-provider-linux-${YA_CORE_VERSION}.tar.gz" \
